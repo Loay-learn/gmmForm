@@ -11,13 +11,16 @@ export default function SuccessPage({ onBackToHome, applicationData }) {
           <div className="flex justify-center mb-6">
             <div className="relative">
               <div className="absolute inset-0 bg-green-400 rounded-full blur-2xl opacity-30 animate-pulse"></div>
-              <CheckCircle className="w-24 h-24 text-green-500 relative animate-bounce" strokeWidth={1.5} />
+              <CheckCircle
+                className="w-24 h-24 text-green-500 relative animate-bounce"
+                strokeWidth={1.5}
+              />
             </div>
           </div>
 
           {/* عنوان النجاح */}
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-         تم تقديم الطلب بنجاح!
+            تم تقديم الطلب بنجاح!
           </h1>
 
           {/* رسالة التأكيد */}
@@ -34,25 +37,33 @@ export default function SuccessPage({ onBackToHome, applicationData }) {
                 <span>ملخص الطلب</span>
                 <FileText className="w-5 h-5" />
               </h3>
-              
+
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                  <span className="font-medium text-gray-800">{applicationData.name}</span>
+                  <span className="font-medium text-gray-800">
+                    {applicationData.Name}
+                  </span>
                   <span className="text-gray-500">الاسم:</span>
                 </div>
-                
+
                 <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                  <span className="font-medium text-gray-800">{applicationData.email}</span>
+                  <span className="font-medium text-gray-800">
+                    {applicationData.Gmail}
+                  </span>
                   <span className="text-gray-500">البريد الإلكتروني:</span>
                 </div>
-                
+
                 <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                  <span className="font-medium text-gray-800">{applicationData.phone}</span>
-                  <span className="text-gray-500">رقم الهاتف:</span>
+                  <span className="font-medium text-gray-800">
+                    {applicationData.Age}
+                  </span>
+                  <span className="text-gray-500">العمر :</span>
                 </div>
-                
+
                 <div className="flex justify-between items-center">
-                  <span className="font-medium text-gray-800">{applicationData.job}</span>
+                  <span className="font-medium text-gray-800">
+                    {applicationData.position_selected}
+                  </span>
                   <span className="text-gray-500">الوظيفة المتقدم لها:</span>
                 </div>
               </div>
@@ -99,9 +110,7 @@ export default function SuccessPage({ onBackToHome, applicationData }) {
 
         {/* رسالة تحفيزية */}
         <div className="text-center mt-6 text-gray-600">
-          <p className="text-sm">
-            نتطلع للعمل معك قريباً! 🚀
-          </p>
+          <p className="text-sm">نتطلع للعمل معك قريباً! 🚀</p>
         </div>
       </div>
     </div>

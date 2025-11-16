@@ -2,6 +2,22 @@ import React, { useState } from "react";
 import MainForm from "./components/MainForm";
 import JobQuestions from "./components/JobQuestions";
 import SuccessPage from "./components/end";
+import { sendJobData, sendMainData } from "./supabase/functions";
+
+const getTabeName = (department) => {
+  switch (department) {
+    case "ادارة عائلة قمم":
+      return "إدارة عائلة قمم";
+    case "إدارة الإعلام والتسويق":
+      return "إدارة الإعلام والتسويق";
+    case "الإدارة المالية":
+      return "الإدارة المالية";
+    case "إدارة البرامج العامة":
+      return "إدارة البرامج العامة";
+    default:
+      return "الأسئلة العامة - المقدمة لكل ادارة";
+  }
+};
 
 export default function App() {
   // حالة الخطوات (1 = بيانات أساسية، 2 = أسئلة الوظيفة)
@@ -25,7 +41,10 @@ export default function App() {
   // إرسال الطلب النهائي
   const handleSubmit = (finalData) => {
     console.log("🚀 البيانات النهائية للإرسال:", finalData);
-    
+    console.log("📋 البيانات الأساسية:", mainData);
+
+    sendMainData(mainData);
+    sendJobData(finalData, getTabeName(mainData.Section_selected));
     // هنا يمكنك إرسال البيانات إلى الباك إند
     // مثال:
     // fetch("/api/apply", {
@@ -47,23 +66,21 @@ export default function App() {
 
     // للاختبار فقط:
     alert("✅ تم تقديم الطلب بنجاح!");
-    
+
     // إعادة تعيين النموذج بعد الإرسال
-   setStep(3); // خطوة جديدة للنجاح
-  setMainData(finalData);
+    setStep(3); // خطوة جديدة للنجاح
+    // setMainData(finalData);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* الخطوة الأولى: النموذج الأساسي */}
-      {step === 1 && (
-        <MainForm onNext={handleNext} />
-      )}
+      {step === 1 && <MainForm onNext={handleNext} />}
 
       {/* الخطوة الثانية: أسئلة الوظيفة */}
       {step === 2 && mainData && (
         <JobQuestions
-          job={mainData.job}
+          job={mainData.position_selected}
           mainData={mainData}
           onBack={handleBack}
           onSubmit={handleSubmit}
@@ -71,14 +88,14 @@ export default function App() {
       )}
 
       {step === 3 && (
-  <SuccessPage
-    applicationData={mainData}
-    onBackToHome={() => {
-      setStep(1);
-      setMainData(null);
-    }}
-  />
-)}
+        <SuccessPage
+          applicationData={mainData}
+          onBackToHome={() => {
+            setStep(1);
+            setMainData(null);
+          }}
+        />
+      )}
     </div>
   );
 }
