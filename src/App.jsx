@@ -48,8 +48,6 @@ export default function App() {
       .from("cv_folder")
       .getPublicUrl(fileName);
 
-    console.log(publicUrlData);
-
     return publicUrlData.publicUrl; // 👈 أرجع الرابط
   };
 
@@ -98,9 +96,9 @@ export default function App() {
 
     let cvUrl = null;
 
-    if (finalData.jobAnswer?.cv_url instanceof File) {
-      cvUrl = await uploadFile(finalData.jobAnswer.cv_url);
-      finalData.jobAnswer.cv_url = cvUrl; // عدّل القيمة من ملف إلى رابط
+    if (finalData.jobAnswers?.cv_url instanceof File) {
+      cvUrl = await uploadFile(finalData.jobAnswers.cv_url);
+      finalData.jobAnswers.cv_url = cvUrl; // عدّل القيمة من ملف إلى رابط
     }
 
     // دمج بيانات الخطوتين
