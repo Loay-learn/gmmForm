@@ -9,7 +9,7 @@ export default function JobQuestions({ job, mainData, onBack, onSubmit }) {
   // الأسئلة الثابتة
   const fixedQuestions = [
     {
-      id: "motivation_and_qualifications",
+      id: "az",
       label: "ما دافعك لاختيار هذا المنصب؟ وكيف ترى نفسك فيه؟ وما مؤهلاتك للعمل عليه؟",
       type: "textarea",
       required: true,
