@@ -20,11 +20,6 @@ export default function JobQuestions({ job, mainData, onBack, onSubmit }) {
       id: "cv_url",
       label: "الرجاء إرفاق السيرة الذاتية الخاصة بك",
       type: "file",
-<<<<<<< HEAD
-    
-=======
-       
->>>>>>> 5938e724ef87995f8fde92ce88ac71056846a9f5
       isFixed: true,
       position: "end"
     }
