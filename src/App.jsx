@@ -8,7 +8,7 @@ import { createClient } from "@supabase/supabase-js";
 
 // 👇 إنشاء عميل Supabase
 const supabase = createClient(
- "https://pdyzylmlacucxfjmzjsa.supabase.co",
+  "https://pdyzylmlacucxfjmzjsa.supabase.co",
   "sb_publishable_4ZZYh7TrJjUQXkMfGJoAcw_o4s8gyqc"
 );
 
@@ -17,54 +17,52 @@ export default function App() {
   const [mainData, setMainData] = useState(null);
 
   // إرسال بيانات الخطوة الأولى فقط لجدول الأسئلة العامة
-const sendMainToGeneralTable = async (data) => {
-  const tableName = "الأسئلة العامة - المقدمة لكل ادارة";
+  const sendMainToGeneralTable = async (data) => {
+    const tableName = "الأسئلة العامة - المقدمة لكل ادارة";
 
-  const { error } = await supabase.from(tableName).insert([data]);
+    const { error } = await supabase.from(tableName).insert([data]);
 
-  if (error) {
-    console.error("❌ خطأ أثناء إرسال البيانات العامة:", error);
-    alert("⚠️ فشل إرسال البيانات العامة!");
-    return false;
-  }
+    if (error) {
+      console.error("❌ خطأ أثناء إرسال البيانات العامة:", error);
+      alert("⚠️ فشل إرسال البيانات العامة!");
+      return false;
+    }
 
-  return true;
-};
-
+    return true;
+  };
 
   const uploadFile = async (file) => {
-  const fileName = `${Date.now()}_${file.name}`;
+    const fileName = `${Date.now()}_${file.name}`;
 
-  const { data, error } = await supabase.storage
-    .from("cv_folder") // 👈 اسم الفولدر في Storage
-    .upload(fileName, file);
+    const { data, error } = await supabase.storage
+      .from("cv_folder") // 👈 اسم الفولدر في Storage
+      .upload(fileName, file);
 
-  if (error) {
-    console.error("❌ فشل رفع الملف:", error);
-    return null;
-  }
+    if (error) {
+      console.error("❌ فشل رفع الملف:", error);
+      return null;
+    }
 
-  // الحصول على رابط التحميل
-  const { data: publicUrlData } = supabase.storage
-    .from("cv_folder")
-    .getPublicUrl(fileName);
+    // الحصول على رابط التحميل
+    const { data: publicUrlData } = supabase.storage
+      .from("cv_folder")
+      .getPublicUrl(fileName);
 
-  return publicUrlData.publicUrl; // 👈 أرجع الرابط
-};
-
+    return publicUrlData.publicUrl; // 👈 أرجع الرابط
+  };
 
   const handleNext = async (data) => {
-  console.log("📋 بيانات Main:", data);
+    console.log("📋 بيانات Main:", data);
 
-  // حفظ البيانات في state
-  setMainData(data);
+    // حفظ البيانات في state
+    setMainData(data);
 
-  // إرسال البيانات لجدول الأسئلة العامة
-  const success = await sendMainToGeneralTable(data);
-  if (!success) return;
+    // إرسال البيانات لجدول الأسئلة العامة
+    const success = await sendMainToGeneralTable(data);
+    if (!success) return;
 
-  setStep(2);
-};
+    setStep(2);
+  };
 
   // الرجوع للخطوة الأولى
   const handleBack = () => {
@@ -96,12 +94,12 @@ const sendMainToGeneralTable = async (data) => {
       return;
     }
 
-     let cvUrl = null;
+    let cvUrl = null;
 
-  if (finalData.jobAnswer?.cv_url instanceof File) {
-    cvUrl = await uploadFile(finalData.jobAnswer.cv_url);
-    finalData.jobAnswer.cv_url = cvUrl; // عدّل القيمة من ملف إلى رابط
-  }
+    if (finalData.jobAnswers?.cv_url instanceof File) {
+      cvUrl = await uploadFile(finalData.jobAnswers.cv_url);
+      finalData.jobAnswers.cv_url = cvUrl; // عدّل القيمة من ملف إلى رابط
+    }
 
     // دمج بيانات الخطوتين
     const fullData = {
@@ -115,17 +113,14 @@ const sendMainToGeneralTable = async (data) => {
     if (!success) return;
 
     alert("✅ تم تقديم الطلب بنجاح!");
-    
+
     setMainData(fullData);
     setStep(3);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-
-      {step === 1 && (
-        <MainForm onNext={handleNext} />
-      )}
+      {step === 1 && <MainForm onNext={handleNext} />}
 
       {step === 2 && mainData && (
         <JobQuestions
@@ -145,7 +140,6 @@ const sendMainToGeneralTable = async (data) => {
           }}
         />
       )}
-
     </div>
   );
 }
